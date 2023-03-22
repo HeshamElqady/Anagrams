@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -11,42 +10,31 @@ public class Main {
         String word = in.nextLine();
         System.out.println("dammi il numero di anagrams che vuoi");
         int numAnagrams = in.nextInt();
-        ArrayList<String> anagrams = new ArrayList<>();
-        anagrams = printPermutn(word, "");
-        for (int i = 1; i <= numAnagrams; i++) {
-            System.out.println(anagrams.get(i));
-        }
+        permutation(word, numAnagrams);
 
     }
 
-    public static String[] printNPermutations(String str, String ans, int n) {
-
-        String[] anagrams = new String[n];
-        for (int k =0; k<=n; k++){
-
-        }
-        if (str.length() == 0) {
-            //System.out.print(ans + " ");
-            return anagrams;
-        }
-
-        for (int i = 0; i < str.length(); i++) {
-
-            // ith character of str
-            char ch = str.charAt(i);
-
-            // Rest of the string after excluding
-            // the ith character
-            String ros = str.substring(0, i) +
-                    str.substring(i + 1);
-
-            // Recursive call
-            printPermutn(ros, ans + ch);
-        }
-        return anagrams;
+    public static void permutation(String str, int num) {
+        permutation("", str, num);
     }
 
+    private static void permutation(String prefix, String str, int num) {
+        int stringNum = 0;
+        int n = str.length();
+        if (n == 0) {
+            System.out.println(prefix);
 
+
+        } else {
+            if (stringNum <= num) {
+                for (int i = 0; i < n; i++) {
+                    permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, n), num);
+
+                }
+                stringNum++;
+            }
+        }
+    }
 }
 
 
