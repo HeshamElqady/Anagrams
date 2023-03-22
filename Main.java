@@ -2,41 +2,57 @@ import java.util.Scanner;
 
 public class Main {
 
-
     public static void main(String[] args) {
 
-        Scanner in = new Scanner(System.in);
-        System.out.println("Dammi la parola");
-        String word = in.nextLine();
-        System.out.println("dammi il numero di anagrams che vuoi");
-        int numAnagrams = in.nextInt();
-        permutation(word, numAnagrams);
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a word to generate permutations: ");
+        String word = scanner.nextLine();
 
-    }
+        System.out.print("Enter the number of permutations to generate: ");
+        int n = scanner.nextInt();
 
-    public static void permutation(String str, int num) {
-        permutation("", str, num);
-    }
+        String[] permutations = generatePermutations(word, n);
 
-    private static void permutation(String prefix, String str, int num) {
-        int stringNum = 0;
-        int n = str.length();
-        if (n == 0) {
-            System.out.println(prefix);
-
-
-        } else {
-            if (stringNum <= num) {
-                for (int i = 0; i < n; i++) {
-                    permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, n), num);
-
-                }
-                stringNum++;
-            }
+        System.out.println("Generated Permutations:");
+        for (String permutation : permutations) {
+            System.out.println(permutation);
         }
     }
+
+    public static String[] generatePermutations(String word, int n) {
+
+        String[] permutations = new String[n];
+        int count = 0;
+
+        while (count < n) {
+            char[] characters = word.toCharArray();
+            int len = characters.length;
+
+            for (int i = 0; i < len - 1; i++) {
+                int j = i + (int) (Math.random() * (len - i));
+                char temp = characters[i];
+                characters[i] = characters[j];
+                characters[j] = temp;
+            }
+
+            String permutation = new String(characters);
+            if (!contains(permutations, permutation)) {
+                permutations[count] = permutation;
+                count++;
+            }
+        }
+
+        return permutations;
+    }
+
+    public static boolean contains(String[] array, String str) {
+        for (String s : array) {
+            if (s != null && s.equals(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
-
-
 
 
